@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:resume_maker/contents/personal.dart';
+import 'package:resume_maker/utils/variables.dart';
 
 class portfolio extends StatefulWidget {
   const portfolio({super.key});
@@ -8,10 +10,13 @@ class portfolio extends StatefulWidget {
   State<portfolio> createState() => _portfolioState();
 }
 
+GlobalKey portfolioKey = GlobalKey();
+
 class _portfolioState extends State<portfolio> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: portfolioKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,6 +33,7 @@ class _portfolioState extends State<portfolio> {
           Container(
             height: 55,
             child: TextFormField(
+              controller: resumeController.txtPortfolioLinkType,
               onTapOutside: (event) {
                 FocusManager.instance.primaryFocus!.unfocus();
               },
@@ -54,6 +60,7 @@ class _portfolioState extends State<portfolio> {
           Container(
             height: 55,
             child: TextFormField(
+              controller: resumeController.txtPortfolioLink,
               onTapOutside: (event) {
                 FocusManager.instance.primaryFocus!.unfocus();
               },
@@ -75,27 +82,37 @@ class _portfolioState extends State<portfolio> {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                height: 50,
-                width: 120,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xffFF6F6E),
-                        Color(0xffFFAF70),
+              InkWell(
+                onTap: () {
+                  print(skillsControllerHandlerList);
+                },
+                child: Container(
+                  height: 50,
+                  width: 120,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(50),
+                      gradient: const LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Color(0xffFF6F6E),
+                            Color(0xffFFAF70),
+                          ]),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.grey,
+                            offset: Offset(0, 7),
+                            blurRadius: 10)
                       ]),
-                ),
-                child: Text(
-                  "SAVE",
-                  style: GoogleFonts.lato(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
+                  child: Text(
+                    "SAVE",
+                    style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 18),
+                  ),
                 ),
               )
             ],

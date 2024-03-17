@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:resume_maker/utils/variables.dart';
 
 import '../view/screens/resumescreen.dart';
 
@@ -14,10 +15,19 @@ class personal extends StatefulWidget {
   State<personal> createState() => _personalState();
 }
 
+ResumeController resumeController = ResumeController();
+GlobalKey personalDetailsKey = GlobalKey();
+
 class _personalState extends State<personal> {
   @override
   Widget build(BuildContext context) {
+    resumeController.txtFirstName = TextEditingController();
+    resumeController.txtLastName = TextEditingController();
+    resumeController.txtEmail = TextEditingController();
+    resumeController.txtPhone = TextEditingController();
+    resumeController.txtAddress = TextEditingController();
     return Form(
+      key: personalDetailsKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -99,6 +109,7 @@ class _personalState extends State<personal> {
                     height: 55,
                     width: 170,
                     child: TextFormField(
+                      controller: resumeController.txtFirstName,
                       onTapOutside: (event) {
                         FocusManager.instance.primaryFocus!.unfocus();
                       },
@@ -130,6 +141,7 @@ class _personalState extends State<personal> {
                     height: 55,
                     width: 170,
                     child: TextFormField(
+                      controller: resumeController.txtLastName,
                       onTapOutside: (event) {
                         FocusManager.instance.primaryFocus!.unfocus();
                       },
@@ -162,6 +174,7 @@ class _personalState extends State<personal> {
           Container(
             height: 55,
             child: TextFormField(
+              controller: resumeController.txtEmail,
               onTapOutside: (event) {
                 FocusManager.instance.primaryFocus!.unfocus();
               },
@@ -188,6 +201,7 @@ class _personalState extends State<personal> {
           Container(
             height: 55,
             child: TextFormField(
+              controller: resumeController.txtPhone,
               onTapOutside: (event) {
                 FocusManager.instance.primaryFocus!.unfocus();
               },
@@ -215,6 +229,7 @@ class _personalState extends State<personal> {
           Container(
             height: 80,
             child: TextFormField(
+              controller: resumeController.txtAddress,
               maxLines: null,
               onTapOutside: (event) {
                 FocusManager.instance.primaryFocus!.unfocus();
@@ -238,16 +253,21 @@ class _personalState extends State<personal> {
                 width: 120,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xffFF6F6E),
-                        Color(0xffFFAF70),
-                      ]),
-                ),
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(50),
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xffFF6F6E),
+                          Color(0xffFFAF70),
+                        ]),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0, 7),
+                          blurRadius: 10)
+                    ]),
                 child: Text(
                   "SAVE",
                   style: GoogleFonts.lato(

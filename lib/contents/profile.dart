@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:resume_maker/contents/personal.dart';
 
 class profile extends StatefulWidget {
   const profile({super.key});
@@ -8,10 +9,13 @@ class profile extends StatefulWidget {
   State<profile> createState() => _profileState();
 }
 
+GlobalKey profileKey = GlobalKey();
+
 class _profileState extends State<profile> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: profileKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -28,6 +32,7 @@ class _profileState extends State<profile> {
           Container(
             height: 55,
             child: TextFormField(
+              controller: resumeController.txtDesignation,
               onTapOutside: (event) {
                 FocusManager.instance.primaryFocus!.unfocus();
               },
@@ -54,6 +59,7 @@ class _profileState extends State<profile> {
           Container(
             height: 300,
             child: TextFormField(
+              controller: resumeController.txtCareerObjective,
               maxLines: 6,
               onTapOutside: (event) {
                 FocusManager.instance.primaryFocus!.unfocus();
@@ -74,16 +80,21 @@ class _profileState extends State<profile> {
                 width: 120,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xffFF6F6E),
-                        Color(0xffFFAF70),
-                      ]),
-                ),
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(50),
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xffFF6F6E),
+                          Color(0xffFFAF70),
+                        ]),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0, 7),
+                          blurRadius: 10)
+                    ]),
                 child: Text(
                   "SAVE",
                   style: GoogleFonts.lato(

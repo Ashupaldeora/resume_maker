@@ -64,7 +64,11 @@ class _homescreenState extends State<homescreen> {
                     colors: [
                       Color(0xffFF6F6E),
                       Color(0xffFFAF70),
-                    ])),
+                    ]),
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.grey, offset: Offset(0, 7), blurRadius: 10)
+                ]),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

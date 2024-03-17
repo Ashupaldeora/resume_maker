@@ -103,16 +103,21 @@ class _projectState extends State<project> {
                 width: 120,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(50),
-                  gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xffFF6F6E),
-                        Color(0xffFFAF70),
-                      ]),
-                ),
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(50),
+                    gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xffFF6F6E),
+                          Color(0xffFFAF70),
+                        ]),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(0, 7),
+                          blurRadius: 10)
+                    ]),
                 child: Text(
                   "SAVE",
                   style: GoogleFonts.lato(
