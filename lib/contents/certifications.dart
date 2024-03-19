@@ -1,5 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:resume_maker/utils/fontstyle.dart';
+import 'package:resume_maker/utils/formField.dart';
+
+import '../utils/variables.dart';
+import '../utils/widgets.dart';
 
 class certification extends StatefulWidget {
   const certification({super.key});
@@ -12,125 +18,243 @@ class _certificationState extends State<certification> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      child: (isCertificationAdded)
+          ? buildSingleChildScrollView()
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ...List.generate(
+                      toShowOneTimeEducation.length,
+                      (index) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "CERTIFICATION NAME",
+                                style: fontsize15(),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                height: 55,
+                                child: fullField(
+                                    certificationControllerHandlerList[
+                                            certificationCount]
+                                        ['certificationName'],
+                                    TextInputType.text),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "ISSUING ORGANIZATION",
+                                style: fontsize15(),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 55,
+                                child: fullField(
+                                    certificationControllerHandlerList[
+                                        certificationCount]['issuing'],
+                                    TextInputType.text),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "ISSUED DATE",
+                                style: fontsize15(),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                height: 55,
+                                child: fullField(
+                                    certificationControllerHandlerList[
+                                        certificationCount]['issuedDate'],
+                                    TextInputType.datetime),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CupertinoButton(
+                                    child: cancelButton(),
+                                    onPressed: () {
+                                      setState(() {
+                                        isCertificationAdded = true;
+                                      });
+                                    },
+                                  ),
+                                  CupertinoButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          // skillListConvertor();
+                                          isCertificationAdded = true;
+                                        });
+                                      },
+                                      child: addButton("Save")),
+                                ],
+                              )
+                            ],
+                          ))
+                ],
+              ),
+            ),
+    );
+  }
+
+  SingleChildScrollView buildSingleChildScrollView() {
+    return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "CERTIFICATION NAME",
-            style: GoogleFonts.lato(
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-                fontSize: 15),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 55,
-            child: TextFormField(
-              onTapOutside: (event) {
-                FocusManager.instance.primaryFocus!.unfocus();
-              },
-              decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade400)),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffFF6F6E)))),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            "ISSUING ORGANIZATION",
-            style: GoogleFonts.lato(
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-                fontSize: 15),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 55,
-            child: TextFormField(
-              onTapOutside: (event) {
-                FocusManager.instance.primaryFocus!.unfocus();
-              },
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.shade400)),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xffFF6F6E)),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Text(
-            "ISSUED DATE",
-            style: GoogleFonts.lato(
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-                fontSize: 15),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 55,
-            child: TextFormField(
-              keyboardType: TextInputType.datetime,
-              onTapOutside: (event) {
-                FocusManager.instance.primaryFocus!.unfocus();
-              },
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey.shade400)),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xffFF6F6E)),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: 50,
-                width: 120,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(50),
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xffFF6F6E),
-                          Color(0xffFFAF70),
+          ...List.generate(
+              certificationControllerHandlerList.length,
+              (index) => Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
+                    decoration: dataContainerShadow(),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 200,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 4.0),
+                                  child: Text(
+                                    overflow: TextOverflow.fade,
+                                    "${certificationControllerHandlerList[index]['certificationName'].text}",
+                                    style: dynamicFontSize(
+                                        16, Colors.black, FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 150,
+                                  child: Text(
+                                    "${certificationControllerHandlerList[index]['issuing'].text}",
+                                    style: dynamicFontSize(14,
+                                        Colors.grey.shade600, FontWeight.w500),
+                                  ),
+                                ),
+                                Text(
+                                  // "${skillsControllerHandlerList![index]['startYear']!.text} to ${skillsControllerHandlerList![index]['endYear']!.text}",
+                                  "${certificationControllerHandlerList[index]['issuedDate'].text}",
+
+                                  style: fontsize15(),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    certificationControllerHandlerList
+                                        .removeAt(index);
+                                  });
+                                  setState(() {
+                                    certificationCount =
+                                        certificationControllerHandlerList
+                                                .length -
+                                            2;
+                                  });
+                                },
+                                child: deleteButton(),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    isCertificationAdded = false;
+                                    certificationCount = index;
+                                  });
+                                },
+                                child: editButton(),
+                              )
+                            ],
+                          ),
                         ]),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0, 7),
-                          blurRadius: 10)
-                    ]),
-                child: Text(
-                  "SAVE",
-                  style: GoogleFonts.lato(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
-                ),
-              )
-            ],
-          )
+                  )),
+          (isCertificationAdded)
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ((isCertificationAdded))
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Add your Certification",
+                                  style: fontsize25(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "You can add multiple certification",
+                                  style: fontsize15(),
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CupertinoButton(
+                          onPressed: () {
+                            setState(() {
+                              TextEditingController diffCertificationName =
+                                  TextEditingController();
+                              TextEditingController diffIssuingOrganization =
+                                  TextEditingController();
+                              TextEditingController diffIssuedDate =
+                                  TextEditingController();
+
+                              Map certificationMap = {
+                                'certificationName': diffCertificationName,
+                                'issuing': diffIssuingOrganization,
+                                'issuedDate': diffIssuedDate,
+                              };
+
+                              certificationControllerHandlerList
+                                  .add(certificationMap);
+                              isCertificationAdded = false;
+                              //when added counts size become lists length, to fill value on latest index
+                              certificationCount =
+                                  certificationControllerHandlerList.length - 1;
+                            });
+                          },
+                          child: addButton("add"),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : const SizedBox(),
         ],
       ),
     );

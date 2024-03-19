@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:resume_maker/utils/fontstyle.dart';
+import 'package:resume_maker/utils/formField.dart';
 import 'package:resume_maker/utils/variables.dart';
+import 'package:resume_maker/utils/widgets.dart';
 
 class skills extends StatefulWidget {
   const skills({super.key});
@@ -13,116 +17,309 @@ class _skillsState extends State<skills> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      child: (isSkillAdded)
+          ? buildSingleChildScrollView()
+          : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  ...List.generate(
+                      toShowOneTimeEducation.length,
+                      (index) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "SKILL",
+                                style: fontsize15(),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 60,
+                                child: fullField(
+                                    skillsControllerHandlerList[skillCount]
+                                        ['skill'],
+                                    TextInputType.text),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "LEVEL: ",
+                                    style: fontsize15(),
+                                  ),
+                                  Text(
+                                    (skillLevel == 0)
+                                        ? "Beginner"
+                                        : (skillLevel == 1)
+                                            ? "Intermediate"
+                                            : (skillLevel == 2)
+                                                ? "Advanced"
+                                                : (skillLevel == 3)
+                                                    ? "Expert"
+                                                    : "",
+                                    style: dynamicFontSize(16,
+                                        Colors.grey.shade800, FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              SliderTheme(
+                                data: const SliderThemeData(
+                                  activeTrackColor: Color(0xffFF6F6E),
+                                  activeTickMarkColor: Colors.white,
+                                  inactiveTickMarkColor: Color(0xffFF6F6E),
+                                  trackHeight: 7,
+                                ),
+                                child: Slider(
+                                  value: skillLevel,
+                                  min: 0,
+                                  max: 3,
+                                  inactiveColor:
+                                      const Color(0xffFF6F6E).withOpacity(0.2),
+                                  thumbColor: const Color(0xffFF6F6E),
+                                  divisions: 3,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      skillLevel = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CupertinoButton(
+                                    child: cancelButton(),
+                                    onPressed: () {
+                                      setState(() {
+                                        isSkillAdded = true;
+                                      });
+                                    },
+                                  ),
+                                  CupertinoButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          // TextEditingController diffSkill =
+                                          //     TextEditingController();
+
+                                          if (skillsControllerHandlerList
+                                                  .length ==
+                                              1) {
+                                            skillsControllerHandlerList[0]['level'] =
+                                                (skillLevel == 0)
+                                                    ? "Beginner"
+                                                    : (skillLevel == 1)
+                                                        ? "Intermediate"
+                                                        : (skillLevel == 2)
+                                                            ? "Advanced"
+                                                            : (skillLevel == 3)
+                                                                ? "Expert"
+                                                                : "";
+                                          }
+                                          skillsControllerHandlerList[
+                                                  skillCount]['level'] =
+                                              (skillLevel == 0)
+                                                  ? "Beginner"
+                                                  : (skillLevel == 1)
+                                                      ? "Intermediate"
+                                                      : (skillLevel == 2)
+                                                          ? "Advanced"
+                                                          : (skillLevel == 3)
+                                                              ? "Expert"
+                                                              : "";
+
+                                          isSkillAdded = true;
+                                          skillLevel = 0;
+                                        });
+                                      },
+                                      child: addButton("Save")),
+                                ],
+                              )
+                            ],
+                          ))
+                ],
+              ),
+            ),
+    );
+  }
+
+  SingleChildScrollView buildSingleChildScrollView() {
+    return SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "SKILL",
-            style: GoogleFonts.lato(
-                color: Colors.grey.shade600,
-                fontWeight: FontWeight.w500,
-                fontSize: 15),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 55,
-            child: TextFormField(
-              onTapOutside: (event) {
-                FocusManager.instance.primaryFocus!.unfocus();
-              },
-              decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey.shade400)),
-                  focusedBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffFF6F6E)))),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Text(
-                "LEVEL: ",
-                style: GoogleFonts.lato(
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15),
-              ),
-              Text(
-                (skillLevel == 0 || skillLevel == 1 || skillLevel == 2)
-                    ? "Beginner"
-                    : (skillLevel == 3)
-                        ? "Intermediate"
-                        : (skillLevel == 4)
-                            ? "Advanced"
-                            : (skillLevel == 5)
-                                ? "Expert"
-                                : "",
-                style: GoogleFonts.lato(
-                    color: Colors.grey.shade700,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15),
-              ),
-            ],
-          ),
-          SliderTheme(
-            data: const SliderThemeData(
-              activeTrackColor: Color(0xffFF6F6E),
-              valueIndicatorColor: Colors.orangeAccent,
-            ),
-            child: Slider(
-              value: skillLevel,
-              min: 0,
-              max: 5,
-              thumbColor: const Color(0xffFF6F6E),
-              label: skillLevel.toString(),
-              divisions: 5,
-              onChanged: (value) {
-                setState(() {
-                  skillLevel = value;
-                });
-              },
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: 50,
-                width: 120,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(50),
-                    gradient: const LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Color(0xffFF6F6E),
-                          Color(0xffFFAF70),
+          ...List.generate(
+              skillsControllerHandlerList.length,
+              (index) => Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25, vertical: 15),
+                    decoration: dataContainerShadow(),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4),
+                                child: SizedBox(
+                                  width: double.maxFinite,
+                                  child: Text(
+                                    overflow: TextOverflow.fade,
+                                    "${skillsControllerHandlerList[index]['skill'].text}",
+                                    style: dynamicFontSize(
+                                        16, Colors.black, FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 4),
+                                child: Text(
+                                  overflow: TextOverflow.fade,
+                                  "${skillsControllerHandlerList[index]['level']}",
+                                  style: dynamicFontSize(16,
+                                      Colors.grey.shade700, FontWeight.w500),
+                                ),
+                              ),
+                              //show level progress indicator
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 15),
+                                child: LinearProgressIndicator(
+                                  value: (skillsControllerHandlerList[index]
+                                              ['level'] ==
+                                          "Beginner")
+                                      ? 0.25
+                                      : (skillsControllerHandlerList[index]
+                                                  ['level'] ==
+                                              "Intermediate")
+                                          ? 0.5
+                                          : (skillsControllerHandlerList[index]
+                                                      ['level'] ==
+                                                  "Advanced")
+                                              ? 0.75
+                                              : (skillsControllerHandlerList[
+                                                          index]['level'] ==
+                                                      "Expert")
+                                                  ? 1
+                                                  : null,
+                                  valueColor: const AlwaysStoppedAnimation(
+                                      Color(0xffFF6F6E)),
+                                  borderRadius: BorderRadius.circular(50),
+                                  minHeight: 7,
+                                ),
+                              )
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    skillsControllerHandlerList.removeAt(index);
+                                  });
+                                  setState(() {
+                                    skillCount =
+                                        skillsControllerHandlerList.length - 2;
+                                  });
+                                },
+                                child: deleteButton(),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    isSkillAdded = false;
+                                    skillCount = index;
+                                    if (skillsControllerHandlerList[index]
+                                            ['level'] ==
+                                        "Beginner") {
+                                      skillLevel = 0;
+                                    } else if (skillsControllerHandlerList[
+                                            index]['level'] ==
+                                        "Intermediate") {
+                                      skillLevel = 1;
+                                    } else if (skillsControllerHandlerList[
+                                            index]['level'] ==
+                                        "Advanced") {
+                                      skillLevel = 2;
+                                    } else if (skillsControllerHandlerList[
+                                            index]['level'] ==
+                                        "Expert") {
+                                      skillLevel = 3;
+                                    }
+                                  });
+                                },
+                                child: editButton(),
+                              ),
+                            ],
+                          )
                         ]),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.grey,
-                          offset: Offset(0, 7),
-                          blurRadius: 10)
-                    ]),
-                child: Text(
-                  "SAVE",
-                  style: GoogleFonts.lato(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18),
-                ),
-              )
-            ],
-          )
+                  )),
+          (isSkillAdded)
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ((isSkillAdded))
+                        ? Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Add your Skill",
+                                  style: fontsize25(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "You can add multiple Skills",
+                                  style: fontsize15(),
+                                ),
+                              ],
+                            ),
+                          )
+                        : const SizedBox(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CupertinoButton(
+                          onPressed: () {
+                            setState(() {
+                              TextEditingController diffSkill =
+                                  TextEditingController();
+
+                              //when added counts size become lists length, to fill value on latest index
+
+                              Map skillMap = {
+                                'skill': diffSkill,
+                                'level': "Beginner",
+                              };
+
+                              skillsControllerHandlerList.add(skillMap);
+
+                              skillCount =
+                                  skillsControllerHandlerList.length - 1;
+                              isSkillAdded = false;
+                            });
+                          },
+                          child: addButton("add"),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : const SizedBox(),
         ],
       ),
     );
