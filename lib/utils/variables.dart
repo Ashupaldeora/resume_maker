@@ -15,7 +15,9 @@ bool isAdded = false,
     isSkillAdded = false,
     isInterestAdded = false,
     isLanguageAdded = false,
-    isReferenceAdded = false;
+    isReferenceAdded = false,
+    isEditedEducation = false,
+    isEditedExperience = false;
 List toShowOneTimeEducation = ["education"];
 int count = 0,
     experienceCount = 0,
@@ -94,6 +96,9 @@ List referenceControllerHandlerList = [
   }
 ];
 
+List presentlyStudyingNot = [];
+List presentlyWorkingNot = [];
+
 //Data Storing Variables
 class ResumeVariables {
   String? firstName,
@@ -120,7 +125,8 @@ class ResumeVariables {
       education = [],
       project = [],
       certification = [],
-      achievement = [];
+      achievement = [],
+      references = [];
   String? referenceName,
       referenceDesignation,
       referenceEmail,

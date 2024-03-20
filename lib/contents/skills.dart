@@ -225,7 +225,7 @@ class _skillsState extends State<skills> {
                                   setState(() {
                                     skillCount =
                                         skillsControllerHandlerList.length - 2;
-                                    skillsListConvertor();
+                                    // skillsListConvertor();
                                   });
                                 },
                                 child: deleteButton(),
@@ -280,6 +280,14 @@ class _skillsState extends State<skills> {
                                 Text(
                                   "You can add multiple Skills",
                                   style: fontsize15(),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "NOTE*: ONLY 4 SKILLS WILL BE SHOWN IN RESUME ",
+                                  style: dynamicFontSize(
+                                      10, Colors.black, FontWeight.w600),
                                 ),
                               ],
                             ),

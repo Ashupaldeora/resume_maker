@@ -45,7 +45,7 @@ class _personalState extends State<personal> {
                   Column(
                     children: [
                       Text(
-                        "PHOTO (OPTIONAL)",
+                        "PHOTO (Required)*",
                         style: fontsize15(),
                       ),
                       CupertinoButton(

@@ -176,6 +176,7 @@ class _experienceState extends State<experience> {
                               onPressed: () {
                                 setState(() {
                                   isExperienceAdded = true;
+                                  isEditedExperience = false;
                                 });
                               },
                               child: cancelButton(),
@@ -186,12 +187,22 @@ class _experienceState extends State<experience> {
                                   // skillListConvertor();
                                   if (experienceKey.currentState!.validate()) {
                                     setState(() {
-                                      experienceListConvertor();
+                                      // experienceListConvertor();
                                       isError = false;
+                                      (presentlyWorking && !isEditedExperience)
+                                          ? presentlyWorkingNot.add(true)
+                                          : (!isEditedExperience)
+                                              ? presentlyWorkingNot.add(false)
+                                              : (isEditedExperience &&
+                                                      !presentlyWorking)
+                                                  ? presentlyWorkingNot[
+                                                      experienceCount] = false
+                                                  : null;
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(snackbar());
                                       pdfGeneratorCount++;
                                       isExperienceAdded = true;
+                                      isEditedExperience = false;
                                     });
                                   } else {
                                     setState(() {
@@ -273,6 +284,7 @@ class _experienceState extends State<experience> {
                                   setState(() {
                                     experienceControllerHandlerList
                                         .removeAt(index);
+                                    presentlyStudyingNot.removeAt(index);
                                   });
                                   setState(() {
                                     count =
@@ -288,6 +300,7 @@ class _experienceState extends State<experience> {
                                   setState(() {
                                     isExperienceAdded = false;
                                     experienceCount = index;
+                                    isEditedExperience = true;
                                   });
                                 },
                                 child: editButton(),
@@ -316,6 +329,14 @@ class _experienceState extends State<experience> {
                                 Text(
                                   "You can add multiple experience",
                                   style: fontsize15(),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "NOTE*: ONLY 2 EXPERIENCE WILL BE SHOWN IN RESUME ",
+                                  style: dynamicFontSize(
+                                      10, Colors.black, FontWeight.w600),
                                 ),
                               ],
                             ),

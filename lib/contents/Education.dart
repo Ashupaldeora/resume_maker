@@ -159,6 +159,7 @@ class _educationState extends State<education> {
                                 onPressed: () {
                                   setState(() {
                                     isAdded = true;
+                                    isEditedEducation = false;
                                   });
                                 },
                                 child: cancelButton(),
@@ -169,12 +170,25 @@ class _educationState extends State<education> {
                                     // skillListConvertor();
                                     if (educationKey.currentState!.validate()) {
                                       setState(() {
-                                        educationListConvertor();
+                                        // educationListConvertor();
                                         isError = false;
+                                        (presentlyStudying &&
+                                                !isEditedEducation)
+                                            ? presentlyStudyingNot.add(true)
+                                            : (!isEditedEducation)
+                                                ? presentlyStudyingNot
+                                                    .add(false)
+                                                : (isEditedEducation &&
+                                                        !presentlyStudying)
+                                                    ? presentlyStudyingNot[
+                                                        count] = false
+                                                    : null;
+
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(snackbar());
                                         pdfGeneratorCount++;
                                         isAdded = true;
+                                        isEditedEducation = false;
                                       });
                                     } else {
                                       setState(() {
@@ -261,6 +275,7 @@ class _educationState extends State<education> {
                                   setState(() {
                                     educationControllerHandlerList
                                         .removeAt(index);
+                                    presentlyStudyingNot.removeAt(index);
                                   });
                                   setState(() {
                                     count =
@@ -276,6 +291,7 @@ class _educationState extends State<education> {
                                   setState(() {
                                     isAdded = false;
                                     count = index;
+                                    isEditedEducation = true;
                                   });
                                 },
                                 child: editButton(),
@@ -305,6 +321,14 @@ class _educationState extends State<education> {
                                   "You can add multiple education",
                                   style: fontsize15(),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text(
+                                  "NOTE*: ONLY 2 EDUCATION WILL BE SHOWN IN RESUME ",
+                                  style: dynamicFontSize(
+                                      10, Colors.black, FontWeight.w600),
+                                ),
                               ],
                             ),
                           )
@@ -323,7 +347,7 @@ class _educationState extends State<education> {
                                   TextEditingController();
                               TextEditingController diffEnd =
                                   TextEditingController();
-                              Map skillsMap = {
+                              Map<dynamic, dynamic> skillsMap = {
                                 'course': diffCourse,
                                 'school': diffSchool,
                                 'startYear': diffStart,

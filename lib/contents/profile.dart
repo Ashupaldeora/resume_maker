@@ -30,7 +30,7 @@ class _profileState extends State<profile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "DESIGNATION",
+              "DESIGNATION*",
               style: fontsize15(),
             ),
             const SizedBox(
