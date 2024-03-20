@@ -6,11 +6,24 @@ A new Flutter project.
 
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+<p>
+  <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/4a8033b8-d090-4077-80b0-a21cb38dea2d" height = "450px" hspace = 20>
+   <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/28ef5d30-be79-42e1-9ff8-2534dcc3ae12" height = "450px" hspace = 20>
+   <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/70b28208-508b-4fb7-a9e7-b352fa1d7b49" height = "450px" hspace = 20>
+</p>
+<p>
+  <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/83741f85-ebfd-4162-b3ff-27989b2de653" height = "450px" hspace = 20>
+   <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/bf29c70d-dc6c-439b-8203-f7cfafdca118" height = "450px" hspace = 20>
+   <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/b6de56e0-ab22-4cdd-888e-da55d91e40cf" height = "450px" hspace = 20>
+</p>
+<p>
+  <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/5b43f08b-375c-45f2-9d1a-767f579288a6" height = "450px" hspace = 20>
+   <img src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/d2e11009-f376-4834-97aa-620b32b9fba8" height = "450px" hspace = 20>
+  
+</p>
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<video src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/c1e55568-379c-4e86-b4d7-72ab94237421">
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
