@@ -1,3 +1,7 @@
+
+
+
+
 # resume_maker
 
 A new Flutter project.
@@ -22,7 +26,7 @@ This project is a starting point for a Flutter application.
   
 </p>
 
-<video src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/c1e55568-379c-4e86-b4d7-72ab94237421">
+<video src="https://github.com/Ashupaldeora/resume_maker/assets/143180848/548b0b22-88d3-481c-8728-e6de66141f3c">
 
 
 
