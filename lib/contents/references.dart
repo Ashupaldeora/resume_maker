@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:resume_maker/utils/formField.dart';
+import 'package:resume_maker/utils/functions.dart';
 
 import '../utils/fontstyle.dart';
 import '../utils/variables.dart';
@@ -14,10 +15,13 @@ class reference extends StatefulWidget {
   State<reference> createState() => _referenceState();
 }
 
+GlobalKey<FormState> referenceKey = GlobalKey<FormState>();
+
 class _referenceState extends State<reference> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: referenceKey,
       child: (isReferenceAdded)
           ? buildSingleChildScrollView()
           : Padding(
@@ -104,13 +108,13 @@ class _referenceState extends State<reference> {
                               const SizedBox(
                                 height: 10,
                               ),
-                              Container(
-                                height: 110,
-                                child: moreLineFullField(
-                                    referenceControllerHandlerList[
-                                        referenceCount]['referenceDetails'],
-                                    TextInputType.text),
-                              ),
+                              SizedBox(
+                                  height: 110,
+                                  child: timePass(
+                                      TextInputType.text,
+                                      referenceControllerHandlerList[
+                                          referenceCount]['referenceDetails'],
+                                      6)),
                               const SizedBox(
                                 height: 30,
                               ),
@@ -130,7 +134,14 @@ class _referenceState extends State<reference> {
                                     child: addButton("Save"),
                                     onPressed: () {
                                       setState(() {
-                                        isReferenceAdded = true;
+                                        if (referenceKey.currentState!
+                                            .validate()) {
+                                          referenceListConvertor();
+                                          isError = false;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar());
+                                          isReferenceAdded = true;
+                                        }
                                       });
                                     },
                                   )
@@ -260,6 +271,7 @@ class _referenceState extends State<reference> {
                                     referenceCount =
                                         referenceControllerHandlerList.length -
                                             2;
+                                    referenceListConvertor();
                                   });
                                 },
                                 child: deleteButton(),
@@ -288,14 +300,14 @@ class _referenceState extends State<reference> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Add your Certification",
+                                  "Add your References",
                                   style: fontsize25(),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  "You can add multiple certification",
+                                  "You can add multiple References",
                                   style: fontsize15(),
                                 ),
                               ],

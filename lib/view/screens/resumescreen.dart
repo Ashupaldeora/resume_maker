@@ -15,10 +15,12 @@ import 'package:resume_maker/contents/profile.dart';
 import 'package:resume_maker/contents/projects.dart';
 import 'package:resume_maker/contents/references.dart';
 import 'package:resume_maker/contents/skills.dart';
+import 'package:resume_maker/utils/functions.dart';
 
 import 'package:resume_maker/utils/resumedetails.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:resume_maker/utils/variables.dart';
+import 'package:resume_maker/view/screens/pdfScreen.dart';
 
 class resume extends StatefulWidget {
   const resume({super.key});
@@ -40,34 +42,50 @@ class _resumeState extends State<resume> {
             AppBar(
               actions: [
                 const Icon(Icons.settings),
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  height: 60,
-                  width: 130,
-                  decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [
-                        Color(0xff16B48C),
-                        Color(0xff8AC747),
-                      ]),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        const Icon(
-                          Icons.picture_as_pdf_outlined,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        Text(
-                          "Generate",
-                          style: GoogleFonts.lato(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 13),
-                        )
-                      ],
+                InkWell(
+                  onTap: () {
+                    if (pdfGeneratorCount >= 7) {
+                      educationListConvertor();
+                      experienceListConvertor();
+                      skillsListConvertor();
+                      languageListConvertor();
+
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const PdfScreen(),
+                      ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(pdfsnackbar());
+                    }
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    height: 60,
+                    width: 130,
+                    decoration: BoxDecoration(
+                        gradient: const LinearGradient(colors: [
+                          Color(0xff16B48C),
+                          Color(0xff8AC747),
+                        ]),
+                        borderRadius: BorderRadius.circular(50)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const Icon(
+                            Icons.picture_as_pdf_outlined,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          Text(
+                            "Generate",
+                            style: GoogleFonts.lato(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 13),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 )

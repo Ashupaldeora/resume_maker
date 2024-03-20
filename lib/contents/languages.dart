@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:resume_maker/utils/formField.dart';
+import 'package:resume_maker/utils/functions.dart';
 
 import '../utils/fontstyle.dart';
 import '../utils/variables.dart';
@@ -14,10 +15,13 @@ class language extends StatefulWidget {
   State<language> createState() => _languageState();
 }
 
+GlobalKey<FormState> languageKey = GlobalKey<FormState>();
+
 class _languageState extends State<language> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: languageKey,
       child: (isLanguageAdded)
           ? buildSingleChildScrollView()
           : Padding(
@@ -30,7 +34,7 @@ class _languageState extends State<language> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "LANGUAGE",
+                                "LANGUAGE*",
                                 style: GoogleFonts.lato(
                                     color: Colors.grey.shade600,
                                     fontWeight: FontWeight.w500,
@@ -112,23 +116,30 @@ class _languageState extends State<language> {
                                     child: addButton("Save"),
                                     onPressed: () {
                                       setState(() {
-                                        languageControllerHandlerList[
-                                                languageCount][
-                                            'proficiency'] = (languageProficiencyLevel ==
-                                                0)
-                                            ? "Elementary Proficiency"
-                                            : (languageProficiencyLevel == 1)
-                                                ? "Limited Working Proficiency"
-                                                : (languageProficiencyLevel ==
-                                                        2)
-                                                    ? "Professional Working Proficiency"
-                                                    : (languageProficiencyLevel ==
-                                                            3)
-                                                        ? "Full Professional Proficiency"
-                                                        : "Native / Bilingual Proficiency";
-
-                                        isLanguageAdded = true;
-                                        languageProficiencyLevel = 0;
+                                        if (languageKey.currentState!
+                                            .validate()) {
+                                          languageControllerHandlerList[
+                                                  languageCount][
+                                              'proficiency'] = (languageProficiencyLevel ==
+                                                  0)
+                                              ? "Elementary Proficiency"
+                                              : (languageProficiencyLevel == 1)
+                                                  ? "Limited Working Proficiency"
+                                                  : (languageProficiencyLevel ==
+                                                          2)
+                                                      ? "Professional Working Proficiency"
+                                                      : (languageProficiencyLevel ==
+                                                              3)
+                                                          ? "Full Professional Proficiency"
+                                                          : "Native / Bilingual Proficiency";
+                                          languageListConvertor();
+                                          isError = false;
+                                          pdfGeneratorCount++;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar());
+                                          isLanguageAdded = true;
+                                          languageProficiencyLevel = 0;
+                                        }
                                       });
                                     },
                                   )
@@ -226,6 +237,7 @@ class _languageState extends State<language> {
                                     languageCount =
                                         languageControllerHandlerList.length -
                                             2;
+                                    languageListConvertor();
                                   });
                                 },
                                 child: deleteButton(),
@@ -256,6 +268,7 @@ class _languageState extends State<language> {
                                         "Native / Bilingual Proficiency") {
                                       languageProficiencyLevel = 4;
                                     }
+                                    print(pdfGeneratorCount);
                                   });
                                 },
                                 child: editButton(),

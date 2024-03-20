@@ -10,6 +10,8 @@ import 'package:resume_maker/utils/variables.dart';
 import 'package:resume_maker/utils/widgets.dart';
 import 'package:resume_maker/view/screens/resumescreen.dart';
 
+import '../utils/functions.dart';
+
 class education extends StatefulWidget {
   const education({super.key});
 
@@ -17,7 +19,7 @@ class education extends StatefulWidget {
   State<education> createState() => _educationState();
 }
 
-GlobalKey educationKey = GlobalKey();
+GlobalKey<FormState> educationKey = GlobalKey<FormState>();
 
 class _educationState extends State<education> {
   @override
@@ -37,7 +39,7 @@ class _educationState extends State<education> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "COURSE / DEGREE",
+                            "COURSE / DEGREE*",
                             style: fontsize15(),
                           ),
                           const SizedBox(
@@ -53,7 +55,7 @@ class _educationState extends State<education> {
                             height: 20,
                           ),
                           Text(
-                            "SCHOOL / COLLEGE / UNIVERSITY",
+                            "SCHOOL / COLLEGE / UNIVERSITY*",
                             style: fontsize15(),
                           ),
                           const SizedBox(
@@ -72,7 +74,7 @@ class _educationState extends State<education> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "EDUCATION PERIOD",
+                                "EDUCATION PERIOD*",
                                 style: fontsize15(),
                               ),
                               Row(
@@ -165,7 +167,20 @@ class _educationState extends State<education> {
                                 onPressed: () {
                                   setState(() {
                                     // skillListConvertor();
-                                    isAdded = true;
+                                    if (educationKey.currentState!.validate()) {
+                                      setState(() {
+                                        educationListConvertor();
+                                        isError = false;
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(snackbar());
+                                        pdfGeneratorCount++;
+                                        isAdded = true;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        isError = true;
+                                      });
+                                    }
                                   });
                                 },
                                 child: addButton("save"),
@@ -251,6 +266,7 @@ class _educationState extends State<education> {
                                     count =
                                         educationControllerHandlerList.length -
                                             2;
+                                    educationListConvertor();
                                   });
                                 },
                                 child: deleteButton(),
@@ -315,6 +331,7 @@ class _educationState extends State<education> {
                               };
 
                               educationControllerHandlerList.add(skillsMap);
+
                               isAdded = false;
                               //when added counts size become lists length, to fill value on latest index
                               count = educationControllerHandlerList.length - 1;

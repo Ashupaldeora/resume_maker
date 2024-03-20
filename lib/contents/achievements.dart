@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:resume_maker/utils/formField.dart';
-
+import 'package:resume_maker/utils/functions.dart';
 import '../utils/fontstyle.dart';
 import '../utils/variables.dart';
 import '../utils/widgets.dart';
@@ -13,10 +13,13 @@ class achievement extends StatefulWidget {
   State<achievement> createState() => _achievementState();
 }
 
+GlobalKey<FormState> achievementKey = GlobalKey<FormState>();
+
 class _achievementState extends State<achievement> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: achievementKey,
       child: (isAchievementAdded)
           ? buildSingleChildScrollView()
           : Padding(
@@ -79,7 +82,14 @@ class _achievementState extends State<achievement> {
                                     child: addButton("Save"),
                                     onPressed: () {
                                       setState(() {
-                                        isAchievementAdded = true;
+                                        if (achievementKey.currentState!
+                                            .validate()) {
+                                          achievementListConvertor();
+                                          isError = false;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackbar());
+                                          isAchievementAdded = true;
+                                        }
                                       });
                                     },
                                   )
@@ -153,6 +163,7 @@ class _achievementState extends State<achievement> {
                                         achievementControllerHandlerList
                                                 .length -
                                             2;
+                                    achievementListConvertor();
                                   });
                                 },
                                 child: deleteButton(),

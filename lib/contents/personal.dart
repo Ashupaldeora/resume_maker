@@ -4,7 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:resume_maker/contents/Education.dart';
+import 'package:resume_maker/utils/fontstyle.dart';
+import 'package:resume_maker/utils/formField.dart';
+import 'package:resume_maker/utils/functions.dart';
 import 'package:resume_maker/utils/variables.dart';
+import 'package:resume_maker/utils/widgets.dart';
 
 import '../view/screens/resumescreen.dart';
 
@@ -16,7 +21,7 @@ class personal extends StatefulWidget {
 }
 
 ResumeController resumeController = ResumeController();
-GlobalKey personalDetailsKey = GlobalKey();
+GlobalKey<FormState> personalDetailsKey = GlobalKey<FormState>();
 
 class _personalState extends State<personal> {
   @override
@@ -41,10 +46,7 @@ class _personalState extends State<personal> {
                     children: [
                       Text(
                         "PHOTO (OPTIONAL)",
-                        style: GoogleFonts.lato(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15),
+                        style: fontsize15(),
                       ),
                       CupertinoButton(
                           onPressed: () {
@@ -78,8 +80,15 @@ class _personalState extends State<personal> {
                                         child: Container(
                                           height: 30,
                                           width: 30,
-                                          decoration: const BoxDecoration(
-                                              color: Color(0xffFF6F6E),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  width: 3,
+                                                  color: Colors.white),
+                                              gradient:
+                                                  const LinearGradient(colors: [
+                                                Color(0xffFF6F6E),
+                                                Color(0xffFFAF70),
+                                              ]),
                                               shape: BoxShape.circle),
                                           child: const Icon(Icons.remove),
                                         ),
@@ -99,11 +108,8 @@ class _personalState extends State<personal> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "FIRST NAME",
-                        style: GoogleFonts.lato(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15),
+                        "FIRST NAME*",
+                        style: fontsize15(),
                       ),
                       const SizedBox(
                         height: 10,
@@ -111,19 +117,8 @@ class _personalState extends State<personal> {
                       SizedBox(
                         height: 55,
                         width: 170,
-                        child: TextFormField(
-                          controller: resumeController.txtFirstName,
-                          onTapOutside: (event) {
-                            FocusManager.instance.primaryFocus!.unfocus();
-                          },
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey.shade400)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xffFF6F6E)))),
-                        ),
+                        child: fullField(
+                            resumeController.txtFirstName, TextInputType.text),
                       )
                     ],
                   ),
@@ -131,11 +126,8 @@ class _personalState extends State<personal> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "LAST NAME",
-                        style: GoogleFonts.lato(
-                            color: Colors.grey.shade600,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15),
+                        "LAST NAME*",
+                        style: fontsize15(),
                       ),
                       const SizedBox(
                         height: 10,
@@ -143,19 +135,8 @@ class _personalState extends State<personal> {
                       SizedBox(
                         height: 55,
                         width: 170,
-                        child: TextFormField(
-                          controller: resumeController.txtLastName,
-                          onTapOutside: (event) {
-                            FocusManager.instance.primaryFocus!.unfocus();
-                          },
-                          decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey.shade400)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0xffFF6F6E)))),
-                        ),
+                        child: fullField(
+                            resumeController.txtLastName, TextInputType.text),
                       )
                     ],
                   ),
@@ -165,84 +146,47 @@ class _personalState extends State<personal> {
                 height: 20,
               ),
               Text(
-                "EMAIL ID",
-                style: GoogleFonts.lato(
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15),
+                "EMAIL ID*",
+                style: fontsize15(),
               ),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                 height: 55,
-                child: TextFormField(
-                  controller: resumeController.txtEmail,
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus!.unfocus();
-                  },
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400)),
-                      focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xffFF6F6E)))),
-                ),
+                child: fullField(
+                    resumeController.txtEmail, TextInputType.emailAddress),
               ),
               const SizedBox(
                 height: 20,
               ),
               Text(
-                "PHONE",
-                style: GoogleFonts.lato(
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15),
+                "PHONE*",
+                style: fontsize15(),
               ),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                 height: 55,
-                child: TextFormField(
-                  controller: resumeController.txtPhone,
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus!.unfocus();
-                  },
-                  decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400)),
-                      prefixText: "+91",
-                      focusedBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xffFF6F6E)))),
-                ),
+                child:
+                    fullField(resumeController.txtPhone, TextInputType.phone),
               ),
               const SizedBox(
                 height: 20,
               ),
               Text(
-                "ADDRESS",
-                style: GoogleFonts.lato(
-                    color: Colors.grey.shade600,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 15),
+                "ADDRESS*",
+                style: fontsize15(),
               ),
               const SizedBox(
                 height: 10,
               ),
               SizedBox(
                 height: 80,
-                child: TextFormField(
-                  controller: resumeController.txtAddress,
-                  maxLines: null,
-                  onTapOutside: (event) {
-                    FocusManager.instance.primaryFocus!.unfocus();
-                  },
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade400)),
-                    focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffFF6F6E))),
-                  ),
+                child: moreLineFullField(
+                  resumeController.txtAddress,
+                  TextInputType.streetAddress,
                 ),
               ),
               const SizedBox(
@@ -251,33 +195,33 @@ class _personalState extends State<personal> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    height: 50,
-                    width: 120,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.orange,
-                        borderRadius: BorderRadius.circular(50),
-                        gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xffFF6F6E),
-                              Color(0xffFFAF70),
-                            ]),
-                        boxShadow: const [
-                          BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(0, 7),
-                              blurRadius: 10)
-                        ]),
-                    child: Text(
-                      "SAVE",
-                      style: GoogleFonts.lato(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18),
-                    ),
+                  CupertinoButton(
+                    child: addButton("Save"),
+                    onPressed: () {
+                      setState(() {
+                        if (personalDetailsKey.currentState!.validate()) {
+                          resumeVariables.firstName =
+                              resumeController.txtFirstName.text;
+                          resumeVariables.lastName =
+                              resumeController.txtLastName.text;
+                          resumeVariables.email =
+                              resumeController.txtEmail.text;
+                          resumeVariables.phone =
+                              resumeController.txtPhone.text;
+                          resumeVariables.address =
+                              resumeController.txtAddress.text;
+                          isError = false;
+                          pdfGeneratorCount++;
+                          print(pdfGeneratorCount);
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(snackbar());
+                        } else {
+                          setState(() {
+                            isError = true;
+                          });
+                        }
+                      });
+                    },
                   )
                 ],
               )

@@ -15,7 +15,10 @@ class _homescreenState extends State<homescreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.only(top: 40, left: 20),
+        padding: const EdgeInsets.only(
+          top: 50,
+          left: 20,
+        ),
         child: Column(
           children: [
             Row(

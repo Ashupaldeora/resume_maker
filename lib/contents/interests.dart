@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:resume_maker/utils/fontstyle.dart';
 import 'package:resume_maker/utils/formField.dart';
+import 'package:resume_maker/utils/functions.dart';
 
 import '../utils/variables.dart';
 import '../utils/widgets.dart';
@@ -14,10 +15,13 @@ class interest extends StatefulWidget {
   State<interest> createState() => _interestState();
 }
 
+GlobalKey<FormState> interestKey = GlobalKey<FormState>();
+
 class _interestState extends State<interest> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: interestKey,
       child: (isInterestAdded)
           ? buildSingleChildScrollView()
           : Padding(
@@ -62,7 +66,16 @@ class _interestState extends State<interest> {
                                     child: addButton("Save"),
                                     onPressed: () {
                                       setState(() {
-                                        isInterestAdded = true;
+                                        if (interestKey.currentState!
+                                            .validate()) {
+                                          setState(() {
+                                            interestListConvertor();
+                                            isError = false;
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackbar());
+                                            isInterestAdded = true;
+                                          });
+                                        }
                                       });
                                     },
                                   )
@@ -122,6 +135,7 @@ class _interestState extends State<interest> {
                                       interestCount =
                                           interestControllerHandlerList.length -
                                               2;
+                                      interestListConvertor();
                                     });
                                   },
                                   child: deleteButton(),
@@ -151,14 +165,14 @@ class _interestState extends State<interest> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Add your Skill",
+                                  "Add your Interest",
                                   style: fontsize25(),
                                 ),
                                 const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  "You can add multiple Skills",
+                                  "You can add multiple Interest",
                                   style: fontsize15(),
                                 ),
                               ],

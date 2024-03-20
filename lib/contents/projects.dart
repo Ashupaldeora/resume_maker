@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:resume_maker/utils/fontstyle.dart';
 import 'package:resume_maker/utils/formField.dart';
+import 'package:resume_maker/utils/functions.dart';
 import 'package:resume_maker/utils/widgets.dart';
 
 import '../utils/variables.dart';
@@ -14,10 +15,13 @@ class project extends StatefulWidget {
   State<project> createState() => _projectState();
 }
 
+GlobalKey<FormState> projectKey = GlobalKey<FormState>();
+
 class _projectState extends State<project> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: projectKey,
       child: (isProjectAdded)
           ? buildSingleChildScrollView()
           : Padding(
@@ -72,10 +76,11 @@ class _projectState extends State<project> {
                         ),
                         SizedBox(
                           height: 55,
-                          child: fullField(
+                          child: timePass(
+                              TextInputType.url,
                               projectControllerHandlerList[projectCount]
                                   ['projectLink'],
-                              TextInputType.url),
+                              2),
                         ),
                         const SizedBox(
                           height: 20,
@@ -95,7 +100,13 @@ class _projectState extends State<project> {
                               onPressed: () {
                                 setState(() {
                                   // skillListConvertor();
-                                  isProjectAdded = true;
+                                  if (projectKey.currentState!.validate()) {
+                                    projectListConvertor();
+                                    isError = false;
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackbar());
+                                    isProjectAdded = true;
+                                  }
                                 });
                               },
                               child: addButton("Save"),
@@ -239,6 +250,7 @@ class _projectState extends State<project> {
                   });
                   setState(() {
                     projectCount = projectControllerHandlerList.length - 2;
+                    projectListConvertor();
                   });
                 },
                 child: deleteButton(),

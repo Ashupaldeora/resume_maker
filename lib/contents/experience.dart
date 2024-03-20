@@ -1,10 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:resume_maker/contents/personal.dart';
 import 'package:resume_maker/utils/fontstyle.dart';
 import 'package:resume_maker/utils/formField.dart';
 import 'package:resume_maker/utils/variables.dart';
 import 'package:resume_maker/utils/widgets.dart';
+
+import '../utils/functions.dart';
+import 'Education.dart';
 
 class experience extends StatefulWidget {
   const experience({super.key});
@@ -14,11 +18,13 @@ class experience extends StatefulWidget {
 }
 
 DateTime dateTime = DateTime.now();
+GlobalKey<FormState> experienceKey = GlobalKey<FormState>();
 
 class _experienceState extends State<experience> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: experienceKey,
       child: (isExperienceAdded)
           ? buildSingleChildScrollView(dateTime)
           : Padding(
@@ -31,7 +37,7 @@ class _experienceState extends State<experience> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "JOB TITLE",
+                          "JOB TITLE*",
                           style: fontsize15(),
                         ),
                         const SizedBox(
@@ -48,7 +54,7 @@ class _experienceState extends State<experience> {
                           height: 20,
                         ),
                         Text(
-                          "COMPANY NAME",
+                          "COMPANY NAME*",
                           style: fontsize15(),
                         ),
                         const SizedBox(
@@ -68,7 +74,7 @@ class _experienceState extends State<experience> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "WORKING PERIOD",
+                              "WORKING PERIOD*",
                               style: fontsize15(),
                             ),
                             Row(
@@ -147,7 +153,7 @@ class _experienceState extends State<experience> {
                           height: 20,
                         ),
                         Text(
-                          "DETAILS",
+                          "DETAILS*",
                           style: fontsize15(),
                         ),
                         const SizedBox(
@@ -178,7 +184,20 @@ class _experienceState extends State<experience> {
                               onPressed: () {
                                 setState(() {
                                   // skillListConvertor();
-                                  isExperienceAdded = true;
+                                  if (experienceKey.currentState!.validate()) {
+                                    setState(() {
+                                      experienceListConvertor();
+                                      isError = false;
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackbar());
+                                      pdfGeneratorCount++;
+                                      isExperienceAdded = true;
+                                    });
+                                  } else {
+                                    setState(() {
+                                      isError = true;
+                                    });
+                                  }
                                 });
                               },
                               child: addButton("Save"),
@@ -259,6 +278,7 @@ class _experienceState extends State<experience> {
                                     count =
                                         experienceControllerHandlerList.length -
                                             2;
+                                    experienceListConvertor();
                                   });
                                 },
                                 child: deleteButton(),
@@ -327,6 +347,7 @@ class _experienceState extends State<experience> {
 
                               experienceControllerHandlerList
                                   .add(experienceMap);
+
                               isExperienceAdded = false;
                               //when added counts size become lists length, to fill value on latest index
                               experienceCount =

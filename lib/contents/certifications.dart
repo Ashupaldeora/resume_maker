@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:resume_maker/utils/fontstyle.dart';
 import 'package:resume_maker/utils/formField.dart';
+import 'package:resume_maker/utils/functions.dart';
 
 import '../utils/variables.dart';
 import '../utils/widgets.dart';
@@ -14,10 +15,13 @@ class certification extends StatefulWidget {
   State<certification> createState() => _certificationState();
 }
 
+GlobalKey<FormState> certificationKey = GlobalKey<FormState>();
+
 class _certificationState extends State<certification> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: certificationKey,
       child: (isCertificationAdded)
           ? buildSingleChildScrollView()
           : Padding(
@@ -97,7 +101,14 @@ class _certificationState extends State<certification> {
                                       onPressed: () {
                                         setState(() {
                                           // skillListConvertor();
-                                          isCertificationAdded = true;
+                                          if (certificationKey.currentState!
+                                              .validate()) {
+                                            certificationListConvertor();
+                                            isError = false;
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackbar());
+                                            isCertificationAdded = true;
+                                          }
                                         });
                                       },
                                       child: addButton("Save")),
@@ -179,6 +190,7 @@ class _certificationState extends State<certification> {
                                         certificationControllerHandlerList
                                                 .length -
                                             2;
+                                    certificationListConvertor();
                                   });
                                 },
                                 child: deleteButton(),

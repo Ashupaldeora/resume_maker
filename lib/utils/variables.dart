@@ -25,7 +25,8 @@ int count = 0,
     skillCount = 0,
     interestCount = 0,
     languageCount = 0,
-    referenceCount = 0;
+    referenceCount = 0,
+    pdfGeneratorCount = 0;
 
 List? interestControllerList, languagesControllerList;
 List educationControllerHandlerList = [
@@ -112,7 +113,14 @@ class ResumeVariables {
   String? projectTitle, projectDescription, projectLinkOptional;
   String? certificationName, issuingOrganization, issuedDate;
   String? achievementTitle, achievementDescription;
-  List skills = [], interest = [], languages = [];
+  List skills = [],
+      interest = [],
+      languages = [],
+      experience = [],
+      education = [],
+      project = [],
+      certification = [],
+      achievement = [];
   String? referenceName,
       referenceDesignation,
       referenceEmail,
@@ -124,17 +132,17 @@ class ResumeVariables {
 
 class ResumeController {
   //Personal field controllers
-  TextEditingController? txtFirstName = TextEditingController(),
+  TextEditingController txtFirstName = TextEditingController(),
       txtLastName = TextEditingController(),
       txtEmail = TextEditingController(),
       txtPhone = TextEditingController(),
       txtAddress = TextEditingController();
   //Profile field controllers
-  TextEditingController? txtDesignation = TextEditingController(),
+  TextEditingController txtDesignation = TextEditingController(),
       txtCareerObjective = TextEditingController();
 
   //Portfolio field controllers
-  TextEditingController? txtPortfolioLinkType = TextEditingController(),
+  TextEditingController txtPortfolioLinkType = TextEditingController(),
       txtPortfolioLink = TextEditingController();
 
   //Education field controllers

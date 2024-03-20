@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:resume_maker/utils/fontstyle.dart';
 import 'package:resume_maker/utils/formField.dart';
+import 'package:resume_maker/utils/functions.dart';
 import 'package:resume_maker/utils/variables.dart';
 import 'package:resume_maker/utils/widgets.dart';
 
@@ -13,10 +14,13 @@ class skills extends StatefulWidget {
   State<skills> createState() => _skillsState();
 }
 
+GlobalKey<FormState> skillKey = GlobalKey<FormState>();
+
 class _skillsState extends State<skills> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: skillKey,
       child: (isSkillAdded)
           ? buildSingleChildScrollView()
           : Padding(
@@ -29,7 +33,7 @@ class _skillsState extends State<skills> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "SKILL",
+                                "SKILL*",
                                 style: fontsize15(),
                               ),
                               const SizedBox(
@@ -106,13 +110,14 @@ class _skillsState extends State<skills> {
                                   CupertinoButton(
                                       onPressed: () {
                                         setState(() {
-                                          // TextEditingController diffSkill =
-                                          //     TextEditingController();
-
-                                          if (skillsControllerHandlerList
-                                                  .length ==
-                                              1) {
-                                            skillsControllerHandlerList[0]['level'] =
+                                          if (skillKey.currentState!
+                                              .validate()) {
+                                            skillsListConvertor();
+                                            isError = false;
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackbar());
+                                            skillsControllerHandlerList[
+                                                    skillCount]['level'] =
                                                 (skillLevel == 0)
                                                     ? "Beginner"
                                                     : (skillLevel == 1)
@@ -122,21 +127,10 @@ class _skillsState extends State<skills> {
                                                             : (skillLevel == 3)
                                                                 ? "Expert"
                                                                 : "";
+                                            pdfGeneratorCount++;
+                                            isSkillAdded = true;
+                                            skillLevel = 0;
                                           }
-                                          skillsControllerHandlerList[
-                                                  skillCount]['level'] =
-                                              (skillLevel == 0)
-                                                  ? "Beginner"
-                                                  : (skillLevel == 1)
-                                                      ? "Intermediate"
-                                                      : (skillLevel == 2)
-                                                          ? "Advanced"
-                                                          : (skillLevel == 3)
-                                                              ? "Expert"
-                                                              : "";
-
-                                          isSkillAdded = true;
-                                          skillLevel = 0;
                                         });
                                       },
                                       child: addButton("Save")),
@@ -231,6 +225,7 @@ class _skillsState extends State<skills> {
                                   setState(() {
                                     skillCount =
                                         skillsControllerHandlerList.length - 2;
+                                    skillsListConvertor();
                                   });
                                 },
                                 child: deleteButton(),
